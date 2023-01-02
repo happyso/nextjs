@@ -35,27 +35,31 @@ export default function Layout({
             <header className={styles.header}>
                 {home ? (
                     <>
-                        <Image
-                            priority
-                            src="/images/profile.png"
-                            className={utilStyles.borderCircle}
-                            height={144}
-                            width={144}
-                            alt={name}
-                        />
+                        <div className="relative w-32 h-32">
+                            {' '}
+                            <Image
+                                priority
+                                src="/images/profile.png"
+                                className="rounded-full"
+                                fill
+                                alt={name}
+                            />
+                        </div>
+
                         <h1 className={utilStyles.heading2Xl}>{name}</h1>
                     </>
                 ) : (
                     <>
                         <Link href="/">
-                            <Image
-                                priority
-                                src="/images/profile.png"
-                                className={utilStyles.borderCircle}
-                                height={108}
-                                width={108}
-                                alt={name}
-                            />
+                            <div className="relative w-40 h-40">
+                                <Image
+                                    priority
+                                    src="/images/profile.png"
+                                    className="rounded-full"
+                                    fill
+                                    alt={name}
+                                />
+                            </div>
                         </Link>
                         <h2 className={utilStyles.headingLg}>
                             <Link href="/">{name}</Link>

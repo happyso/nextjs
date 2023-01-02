@@ -1,18 +1,11 @@
-import { InferGetStaticPropsType } from 'next'
 import { getSortedPostsData } from '../../lib/posts'
 import Layout, { siteTitle } from '../components/Layout'
 import utilStyles from '../styles/utils.module.css'
 import Head from 'next/head'
+import Date from 'components/Date'
+import Link from 'next/link'
 
 export async function getStaticProps() {
-    // const response = await fetch('http://localhost:6600/api/posts')
-    // const json = await response.json()
-
-    // return {
-    //     props: {
-    //         allPostsData: json.allPostsData,
-    //     },
-    // }
     const allPostsData = getSortedPostsData()
 
     return {
@@ -21,6 +14,18 @@ export async function getStaticProps() {
         },
     }
 }
+
+// export async function getServerSideProps() {
+//     //ssg
+//     const response = await fetch('http://localhost:6600/api/posts')
+//     const json = await response.json()
+
+//     return {
+//         props: {
+//             allPostsData: json.allPostsData,
+//         },
+//     }
+// }
 
 interface PostInterface {
     id: string
@@ -33,6 +38,13 @@ export default function Home({
 }: {
     allPostsData: PostInterface[]
 }) {
+    //csr
+    // const [allPostsData, setAllPostsData] = useState([])
+    // useEffect(() => {
+    //   fetch('/api/posts')
+    //     .then((res) => res.json())
+    //     .then((data) => setAllPostsData(data.allPostsData))
+    // }, [])
     return (
         <Layout home={true}>
             <Head>
@@ -55,11 +67,14 @@ export default function Home({
                     {allPostsData &&
                         allPostsData.map(({ id, date, title }) => (
                             <li className={utilStyles.listItem} key={id}>
-                                {title}
-                                <br />
-                                {id}
-                                <br />
-                                {date}
+                                <Link href={`/posts/${id}`}>
+                                    {title}
+                                    <br />
+                                    {id}
+                                </Link>
+                                <p>
+                                    <Date dateString={date} />
+                                </p>
                             </li>
                         ))}
                 </ul>
